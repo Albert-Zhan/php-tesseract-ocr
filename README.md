@@ -49,7 +49,7 @@ If there are multiple warnings in OSX compilation, please ignore them
 
 ## Example
 
-> Because the function of PHPTesseractOCR is not a standard function of PHP, IDE can not be automatically completed. In order to facilitate development, you can click here to download [IDE assistant](http://www.5lazy.cn/), which can be automatically completed under IDE.
+> Because the function of PHPTesseractOCR is not a standard function of PHP, IDE can not be automatically completed. In order to facilitate development, you can click here to download [IDE assistant](http://47.93.187.229/helper.zip), which can be automatically completed under IDE.
 
 ### 1. Simple Character Recognition
 

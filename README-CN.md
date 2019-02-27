@@ -49,7 +49,7 @@ OSX在编译中如果出现多处警告请忽略
 
 ## 例子
 
-> 由于PHPTesseractOCR的函数并不是PHP标准函数，IDE无法进行自动补全，为了方便开发可以点此下载[IDE助手](http://www.5lazy.cn/)，在IDE下即可自动补全 。
+> 由于PHPTesseractOCR的函数并不是PHP标准函数，IDE无法进行自动补全，为了方便开发可以点此下载[IDE助手](http://47.93.187.229/helper.zip)，在IDE下即可自动补全 。
 
 ### 1. 简单的字符识别
 

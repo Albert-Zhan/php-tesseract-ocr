@@ -23,10 +23,10 @@ PHP Tesseract OCR
 ### 1. 安装PHP-CPP
 
 ```shell
-//PHP7.0.0以上
+#PHP7.0.0以上
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
 cd PHP-CPP
-//PHP7以下PHP5以上
+#PHP7以下PHP5以上
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP-LEGACY.git
 cd PHP-CPP-LEGACY
 make

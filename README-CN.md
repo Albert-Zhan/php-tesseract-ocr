@@ -8,7 +8,7 @@ PHP Tesseract OCR
 
 ## 安装
 
-> 本文只介绍PHP-CPP和PHPTesseractOCR的安装，tesseract的安装以及其他配置请参考本篇文章:http://www.5lazy.cn。
+> 本文只介绍PHP-CPP和PHPTesseractOCR的安装，tesseract的安装以及其他配置请参考本篇文章:http://www.5lazy.cn/post-141.html
 
 ### 环境要求
 

@@ -79,6 +79,14 @@ public:
     void __destruct();
 
     /**
+     *  Setting additional parameters
+     *  @param	name	Parameter name
+     *  @param	value	parameter values
+     *  @return	object	PHP this
+     */
+    Php::Value setVariable(Php::Parameters &params);
+
+    /**
 	 *  Tesseract Initialization
 	 *  @param	dir	    Tessdata directory
 	 *  @param	lang	Tessdata language pack
@@ -88,14 +96,6 @@ public:
     Php::Value init(Php::Parameters &params);
 
     /**
-	 *  Setting parameters
-	 *  @param	name	Parameter name
-	 *  @param	value	parameter values
-	 *  @return	object	PHP this
-	 */
-    Php::Value setVariable(Php::Parameters &params);
-
-    /**
 	 *  Setting Paging Mode
      *  @param	name	Paging mode
 	 *  @return	object	PHP this
@@ -103,14 +103,14 @@ public:
     Php::Value setPageSegMode(Php::Parameters &params);
 
     /**
-	 *  Setting Recognition Pictures
-	 *  @param	path	Identify picture paths
+	 *  Setting Recognition Image
+	 *  @param	path	Recognized Image Path
 	 *  @return	object	PHP this
 	 */
     Php::Value setImage(Php::Parameters &params);
 
     /**
-     *  Setting Subrectangle of Image
+     *  Setting image recognition area
      *  @param	left	Left
      *  @param	top     Top
      *  @param	width   Width
@@ -127,7 +127,7 @@ public:
     Php::Value recognize(Php::Parameters &params);
 
     /**
-	 *  Application     Paging Layout
+	 *  Application Paging Layout
 	 *  @return	object	PHP this
 	 */
     Php::Value analyseLayout();
@@ -143,14 +143,14 @@ public:
     Php::Value orientation(Php::Parameters &params);
 
     /**
-     *  Getting Text Blocks
+     *  Search for text blocks
      *  @param	level	  tesseract::PageIteratorLevel
      *  @param	callable  PHP callback function
      */
     void getComponentImages(Php::Parameters &params);
 
     /**
-	 *  Get a reading-order iterator to the results of LayoutAnalysis
+	 *  Get result iterator
      *  @param	level	  tesseract::PageIteratorLevel
      *  @param	callable  PHP callback function
 	 */

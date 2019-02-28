@@ -8,7 +8,7 @@ PHP Tesseract OCR
 
 ## 安装
 
-> 本文只介绍PHP-CPP和PHPTesseractOCR的安装，tesseract的安装以及其他配置请移步到我的个人博客:http://www.5lazy.cn。
+> 本文只介绍PHP-CPP和PHPTesseractOCR的安装，tesseract的安装以及其他配置请参考本篇文章:http://www.5lazy.cn。
 
 ### 环境要求
 
@@ -115,27 +115,234 @@ $tesseract->init(__DIR__.'/traineddata/tessdata-fast/','eng')
 echo $tesseract->getUTF8Text();
 ```
 
-其他API请查看手册
+## API
 
-> PHPTesseractOCR使用文档请访问 [PHPTesseractOCR0.1.1](http://www.5lazy.cn/)
+### setVariable($name,$value)
 
-## 常见问题
+设置附加参数
 
-### 1. PHPTesseractOCR是否是线程安全?
-
-是。大多数情况下是线程安全的，并且是完全独立的，除非你使用了setVariable改变了某些参数的值。
-
-### 2. PHPCli模式下!StrCmp (locale, "C"): Error: Assert failed: in file baseapi. cpp, line 209?
-
-```shell
-vim ~/.bash_profile
-export LC_ALL=C
-source ~/.bash_profile
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+//例子1
+$tesseract->setVariable('save_blob_choices','T');
+//例子2
+$tesseract->setVariable('tessedit_char_whitelist','0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+//例子3
+$tesseract->setVariable('tessedit_char_blacklist','xyz');
 ```
 
-### 3. PHPCli模式下Warning. Invalid resolution 0 dpi. Using 70 instead.
+setVariable的参数参考:http://www.sk-spell.sk.cx/tesseract-ocr-parameters-in-302-version
 
-此情况是tesserocr的bug，不影响使用，请忽略。
+
+### init($dir,$lang,$mod='OEM_DEFAULT')
+
+初始化Tesseract
+
+traineddata github下载:https://github.com/tesseract-ocr/tessdata  
+traineddata百度云下载:https://pan.baidu.com/s/1YVZzGf21b8PQnjPCVP3v9Q 提取码：9n8U 
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+//traineddata目录必须以/结尾
+$tesseract->setVariable('save_blob_choices','T')->init(__DIR__.'/traineddata/tessdata-fast/','eng');
+//设置多语言
+$tesseract->setVariable('save_blob_choices','T')->init(__DIR__.'/traineddata/tessdata-fast/','eng+chi_sim');
+//设置识别引擎
+$tesseract->setVariable('save_blob_choices','T')->init(__DIR__.'/traineddata/tessdata-raw/','eng','OEM_TESSERACT_LSTM_COMBINED');
+```
+
+Engine Mode Options:
+- OEM_DEFAULT(Default, based on what is available.)
+- OEM_LSTM_ONLY(Neural nets LSTM engine only.)
+- OEM_TESSERACT_LSTM_COMBINED(Legacy + LSTM engines.)
+- OEM_TESSERACT_ONLY(Legacy engine only.)
+
+### setPageSegMode($name)
+
+设置页面分割模式
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO');
+```
+页面分割参数参考:https://rmtheis.github.io/tess-two/javadoc/com/googlecode/tesseract/android/TessBaseAPI.PageSegMode.html
+### setImage($path)
+
+设置需要识别的图片
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+//支持png, jpg, jpeg, tif, webp格式
+$tesseract->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO')
+->setImage(__DIR__.'/img/1.png');
+```
+
+### setRectangle($left,$top,$width,$height)
+
+设置图像识别区域
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO')
+->setImage(__DIR__.'/img/1.png')
+->setRectangle(100,100,100,100);
+```
+
+### recognize($monitor)
+
+识别后，输出在内部保存，直到下一个setimage
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO')
+->setImage(__DIR__.'/img/1.png')
+->setRectangle(100,100,100,100)
+//目前参数仅支持0或null。
+->recognize(0);
+```
+
+### analyseLayout()
+
+应用页面分割布局分析
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO')
+->setImage(__DIR__.'/img/1.png')
+->setRectangle(100,100,100,100)
+->recognize(0)
+->analyseLayout();
+```
+
+### orientation(&$orientation,&$writingDirection,&$textlineOrder,&$deskewAngle)
+
+获取页面布局分析
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->setVariable('save_blob_choices','T')
+->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setPageSegMode('PSM_AUTO')
+->setImage(__DIR__.'/img/1.png')
+->setRectangle(100,100,100,100)
+->recognize(0)
+->analyseLayout()
+->orientation($orientation,$writingDirection,$textlineOrder,$deskewAngle);
+```
+
+### getComponentImages($level,$callable)
+
+搜索文字图块
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setImage(__DIR__.'/img/1.png');
+$tesseract->getComponentImages('RIL_WORD',function ($x,$y,$w,$h,$text){
+    echo "Result:{$text}X:{$x}Y:{$y}Width:{$w}Height:{$h}";
+    echo '<br>';
+});
+```
+
+PageIteratorLevel Options:
+- RIL_BLOCK(Block of text/image/separator line.)
+- RIL_PARA(Paragraph within a block.)
+- RIL_TEXTLINE(Line within a paragraph.)
+- RIL_WORD(Word within a textline.)
+- RIL_SYMBOL(Symbol/character within a word.)
+
+### getIterator($level,$callable)
+
+获取结果迭代器
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setImage(__DIR__.'/img/1.png')->recognize(0);
+$tesseract->getIterator('RIL_TEXTLINE',function ($text,$x1,$y1,$x2,$y2){
+    echo "Text:{$text}X1:{$x1}Y1:{$y1}X2:{$x2}Y2:{$y2}";
+    echo '<br>';
+});
+```
+有关参数，请参阅getComponentImages
+
+### getUTF8Text()
+
+获取识别后的UTF8文本
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$text=$tesseract->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+->setImage(__DIR__.'/img/1.png')
+->getUTF8Text();
+echo $text;
+```
+
+### clear()
+
+释放识别结果和任何存储的图像数据
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+$tesseract->init(__DIR__.'/traineddata/tessdata-fast/','eng')
+//三幅图像被正常识别。
+for($i=1;$i<=3;$i++){
+    $tesseract->setImage(__DIR__.'/img/'.$i.'.png')
+    echo $tesseract->getUTF8Text();
+}
+//只能被识别一张，后两张被释放了
+for($i=1;$i<=3;$i++){
+   $tesseract->setImage(__DIR__.'/img/'.$i.'.png')
+   echo $tesseract->getUTF8Text();
+   $tesseract->clear();
+}
+```
+
+### version()
+
+获取PHP Tesseract OCR版本号
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+echo $tesseract->version();
+```
+
+### tesseract()
+
+获取tesseract版本号
+
+```php
+use tesseract_ocr\Tesseract;
+$tesseract=new Tesseract();
+echo $tesseract->tesseract();
+```
+
+## 问题交流
+
+QQ交流群：24379498
 
 ## License
 

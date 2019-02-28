@@ -57,6 +57,26 @@ void phpTesseract::__destruct()
 }
 
 /**
+ *  Setting additional parameters
+ *  @param	name	Parameter name
+ *  @param	value	parameter values
+ *  @return	object	PHP this
+ */
+Php::Value phpTesseract::setVariable(Php::Parameters &params)
+{
+    try
+    {
+        this->api->SetVariable(params[0],params[1]);
+    }
+    catch (...)
+    {
+        Php::error << "Error setting variable function" << std::flush;
+    }
+    Php::Value self(this);
+    return self;
+}
+
+/**
  *  Tesseract Initialization
  *  @param	dir	    Tessdata directory
  *  @param	lang	Tessdata language pack
@@ -85,26 +105,6 @@ Php::Value phpTesseract::init(Php::Parameters &params)
 }
 
 /**
- *  Setting parameters
- *  @param	name	Parameter name
- *  @param	value	parameter values
- *  @return	object	PHP this
- */
-Php::Value phpTesseract::setVariable(Php::Parameters &params)
-{
-    try
-    {
-        this->api->SetVariable(params[0],params[1]);
-    }
-    catch (...)
-    {
-        Php::error << "Error setting variable function" << std::flush;
-    }
-    Php::Value self(this);
-    return self;
-}
-
-/**
  *  Setting Paging Mode
  *  @param	name	Paging mode
  *  @return	object	PHP this
@@ -124,8 +124,8 @@ Php::Value phpTesseract::setPageSegMode(Php::Parameters &params)
 }
 
 /**
- *  Setting Recognition Pictures
- *  @param	path	Identify picture paths
+ *  Setting Recognition Image
+ *  @param	path	Recognized Image Path
  *  @return	object	PHP this
  */
 Php::Value phpTesseract::setImage(Php::Parameters &params)
@@ -144,7 +144,7 @@ Php::Value phpTesseract::setImage(Php::Parameters &params)
 }
 
 /**
- *  Setting Subrectangle of Image
+ *  Setting image recognition area
  *  @param	left	Left
  *  @param	top     Top
  *  @param	width   Width
@@ -193,7 +193,7 @@ Php::Value phpTesseract::recognize(Php::Parameters &params)
 }
 
 /**
- *  Application     Paging Layout
+ *  Application Paging Layout
  *  @return	object	PHP this
  */
 Php::Value phpTesseract::analyseLayout()
@@ -241,7 +241,7 @@ Php::Value phpTesseract::orientation(Php::Parameters &params)
 }
 
 /**
- *  Getting Text Blocks
+ *  Search for text blocks
  *  @param	level	  tesseract::PageIteratorLevel
  *  @param	callable  PHP callback function
  */
@@ -267,7 +267,7 @@ void phpTesseract::getComponentImages(Php::Parameters &params)
 }
 
 /**
- *  Get a reading-order iterator to the results of LayoutAnalysis
+ *  Get result iterator
  *  @param	level	  tesseract::PageIteratorLevel
  *  @param	callable  PHP callback function
  */

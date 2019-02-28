@@ -15,7 +15,7 @@ extern "C" {
 PHPCPP_EXPORT void *get_module()
 {
     // create extension
-    static Php::Extension extension("tesseract", "0.1.1");
+    static Php::Extension extension("tesseract", "0.1.2");
 
     // create a namespace
     Php::Namespace tesseract_ocr("tesseract_ocr");

@@ -24,14 +24,14 @@ PHPCPP_EXPORT void *get_module()
     Php::Class<phpTesseract> phpTesseractClass("Tesseract");
     phpTesseractClass.method<&phpTesseract::__construct>("__construct");
     phpTesseractClass.method<&phpTesseract::__destruct>("__destruct");
+    phpTesseractClass.method<&phpTesseract::setVariable>("setVariable", {
+            Php::ByVal("name",Php::Type::String),
+            Php::ByVal("value",Php::Type::String)
+    });
     phpTesseractClass.method<&phpTesseract::init>("init", {
             Php::ByVal("dir",Php::Type::String),
             Php::ByVal("lang",Php::Type::String),
             Php::ByVal("mod",Php::Type::String,false)
-    });
-    phpTesseractClass.method<&phpTesseract::setVariable>("setVariable", {
-            Php::ByVal("name",Php::Type::String),
-            Php::ByVal("value",Php::Type::String)
     });
     phpTesseractClass.method<&phpTesseract::setPageSegMode>("setPageSegMode", {
             Php::ByVal("name",Php::Type::String)

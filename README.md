@@ -8,7 +8,7 @@ PHP Tesseract OCR
 
 ## Installation
 
-> This article only introduces the installation of PHP-CPP and PHP TesseractOCR. For Tesseract installation and other configuration, please refer to this article: http://www.5lazy.cn.
+> This article only introduces the installation of PHP-CPP and PHP TesseractOCR. For Tesseract installation and other configuration, please refer to this article: http://www.5lazy.cn/post-141.html
 
 ### Requirements
 

@@ -27,7 +27,7 @@ PHP Tesseract OCR
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
 cd PHP-CPP
 #PHP7以下PHP5以上
-git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP-LEGACY.git
+https://github.com/2654709623/PHP-CPP-LEGACY
 cd PHP-CPP-LEGACY
 make
 sudo make install

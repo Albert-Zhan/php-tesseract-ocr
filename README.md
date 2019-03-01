@@ -13,9 +13,9 @@ PHP Tesseract OCR
 ### Requirements
 
 - Linux, OS X does not support windows for the time being
-- PHP5.6 or later (It is recommended to use php7.0 or more.)
+- PHP7 or later
 - tesseract 4.0.0 or latest
-- PHP-CPP 2.1.2 or the latest (PHP 5.6 uses PHP-CPP-LEGACY)
+- PHP-CPP2.1.2 or later
 - GCC 4.8 or later
 
 > ⚠ Before installation, add php-config of the current PHP environment to the environment variable.
@@ -23,12 +23,8 @@ PHP Tesseract OCR
 ### 1. Install PHP-CPP
 
 ```shell
-#PHP7.0.0 or later
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
 cd PHP-CPP
-#PHP5.6
-git clone https://github.com/2654709623/PHP-CPP-LEGACY
-cd PHP-CPP-LEGACY
 make
 sudo make install
 ```

@@ -335,10 +335,6 @@ $tesseract=new Tesseract();
 echo $tesseract->tesseract();
 ```
 
-## Issue
-
-QQ Group：24379498
-
 ## License
 
 Apache License Version 2.0 see http://www.apache.org/licenses/LICENSE-2.0.html
